@@ -38,6 +38,7 @@ container.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.y = 0.04;
 
+// Environmental lighting.
 function setEnvironment() {
   const loader = new HDRLoader();
   const pmremGenerator = new THREE.PMREMGenerator(renderer);
@@ -56,18 +57,7 @@ function setEnvironment() {
   );
 }
 
-// Window responsiveness.
-window.addEventListener("resize", resize);
-function resize() {
-  width = window.innerWidth;
-  height = window.innerHeight;
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.render(scene, camera);
-}
-
-// Load the GLTF.
+// GLTF loader.
 function loadGLTF() {
   const loader = new GLTFLoader().setPath("static/glb/");
   const dracoLoader = new DRACOLoader();
@@ -79,10 +69,23 @@ function loadGLTF() {
   });
 }
 
+// Window responsiveness.
+window.addEventListener("resize", resize);
+function resize() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.render(scene, camera);
+}
+
 // Main animation loop.
 function animate() {
   requestAnimationFrame(animate);
-  if (motorcycle) { motorcycle.rotation.y += 0.01; }
+  if (motorcycle) {
+    motorcycle.rotation.y += 0.01;
+  }
   controls.update();
   renderer.render(scene, camera);
 }
@@ -94,4 +97,3 @@ loadGLTF();
 // Render the scene and start the animation loop.
 renderer.render(scene, camera);
 requestAnimationFrame(animate);
-
