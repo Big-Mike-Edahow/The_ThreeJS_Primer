@@ -44,22 +44,18 @@ function setEnvironment() {
   const pmremGenerator = new THREE.PMREMGenerator(renderer);
   pmremGenerator.compileEquirectangularShader();
   loader.load(
-    "static/hdr/venice_sunset_1k.hdr",
+    "static/images/venice_sunset_1k.hdr",
     texture => {
       const envMap = pmremGenerator.fromEquirectangular(texture).texture;
       pmremGenerator.dispose();
       scene.environment = envMap;
-    },
-    undefined,
-    err => {
-      console.error("An error occurred setting the environment");
     }
   );
 }
 
 // GLTF loader.
 function loadGLTF() {
-  const loader = new GLTFLoader().setPath("static/glb/");
+  const loader = new GLTFLoader().setPath("static/images/");
   const dracoLoader = new DRACOLoader();
   dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
   loader.setDRACOLoader(dracoLoader);
